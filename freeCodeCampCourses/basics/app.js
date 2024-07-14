@@ -1,7 +1,7 @@
 const utils = require("./01-custom-modules");
 utils.printFileName(__filename);
 
-// CHAPTER 01 - basic js code
+// BASIC JS CODE
 const amount = 7;
 amount < 10 ? console.log("smol numnber") : console.log("big boi number");
 console.log("Hello, world");
@@ -12,7 +12,7 @@ node 01-basics.js
 The file extension may also be skipped.
 */
 
-// CHAPTER 02 - GLOBALS
+// GLOBALS
 /** The following are some of the globals in node (window object not needed to access them).
     __dirname  - path to current directory
     __filename - file name
@@ -23,7 +23,7 @@ The file extension may also be skipped.
 console.log({ __dirname, __filename });
 // console.log({ process });
 
-// CHAPTER 03 - MODULES
+// MODULES
 // CommonJS, every file is module (by default)
 // Modules - Encapsulated Code (only share minimum)
 console.log(utils.appConstants);
@@ -32,5 +32,8 @@ const { JOHN, PETER } = utils.appConstants;
 utils.sayHi(JOHN);
 utils.sayHi(PETER);
 
-// CHAPTER 04 - BUILT-IN MODULES
+// BUILT-IN MODULES
 require("./02-built-in-modules");
+
+// FILESYSTEMS
+require("./03-filesystems");
