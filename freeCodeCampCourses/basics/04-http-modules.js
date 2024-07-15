@@ -1,24 +1,25 @@
 const http = require("http");
-const { env } = require("process");
+const portToListen = process?.env?.port || 3000;
+const BIG_NUM = 1000000000;
 
-const DEFAULT_PORT = 3000;
-
-const server = http.createServer((request, response) => {
-  response.write("Welcome to the sample application.\n");
+const server = http.createServer((request, res) => {
   switch (request.url) {
     case "/":
-      response.end("This is the homepage");
+      res.end("This is the homepage");
       break;
+
     case "/about":
-      response.end("This is the about page");
+      for (let i = 0; i < BIG_NUM; i++) {}
+      res.write("Blocked the code just to say: ");
+      res.end("This is the about page");
       break;
+
     default:
-      response.write(`Oops, page not found. \nPlease try a different URL.`);
-      response.end();
+      res.write(`Oops, page not found. \nPlease try a different URL.`);
+      res.end();
   }
 });
 
-const portToListen = env.PORT || DEFAULT_PORT;
-console.log({ portToListen });
-
-server.listen(portToListen);
+server.listen(portToListen, () => {
+  console.log(`Server listening on port ${portToListen}`);
+});
