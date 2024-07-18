@@ -25,6 +25,7 @@ const path = require("path");
 const pathSeparator = path.sep;
 console.log({ pathSeparator });
 
+// relative paths
 let testFilePath = path.join("/content", "subfolder", "test.txt"); // will return relative path after conjoining and normalizing them
 console.log({ testFilePath }); // this will be: \\content\\subfolder\\test.txt
 testFilePath = path.join("/content/", "subfolder", "test.txt");
@@ -32,6 +33,7 @@ console.log({ testFilePath }); // this will be: \\content\\subfolder\\test.txt (
 const fileNameFromPath = path.basename(testFilePath);
 console.log({ fileNameFromPath });
 
+// absolue path
 const testFilePathAbsolute = path.resolve(
   __dirname,
   "content",
