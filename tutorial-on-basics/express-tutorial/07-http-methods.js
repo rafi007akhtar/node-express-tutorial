@@ -16,7 +16,7 @@ app.use(express.json());
 const {
   BASE_PATH: peopleBasePath,
   router: peopleRouter,
-} = require("./routes/people.routes");
+} = require("./routes/people.routes"); // or: "./routes/peopleAlter.routes" to get alternative routes, but same results
 // next: use a middleware to club the base path with its router
 app.use(peopleBasePath, peopleRouter); // this clubs all routes starting with `/api/people` with its matching routes created by the router
 
