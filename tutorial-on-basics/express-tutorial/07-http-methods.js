@@ -12,56 +12,14 @@ app.use(express.urlencoded({ extended: false }));
 // This middleware is to signal that the incoming data will be in JSON format
 app.use(express.json());
 
-const { people } = require("./data");
-app.get("/api/people", (request, res) => {
-  res.json(people);
-});
-app.post("/api/people", (request, res) => {
-  const { name } = request.body;
-  if (!name) {
-    res.status(401).json({
-      success: false,
-      msg: "Please enter a name",
-    });
-  } else {
-    res.status(201).json({
-      success: true,
-      person: name,
-    });
-  }
-});
+// get the base path and routes for people from its routes file
+const {
+  BASE_PATH: peopleBasePath,
+  router: peopleRouter,
+} = require("./routes/people.routes");
+// next: use a middleware to club the base path with its router
+app.use(peopleBasePath, peopleRouter); // this clubs all routes starting with `/api/people` with its matching routes created by the router
 
-app.post("/login", (request, res) => {
-  console.log(request.body);
-
-  request.body?.name
-    ? res.status(200).send(`Welcome, ${request.body.name}`)
-    : res.status(401).send("Please enter a name.");
-});
-
-app.put("/api/people/:id", (request, res) => {
-  const { id } = request.params;
-  const { name } = request.body;
-  let personInd = -1;
-  const personToUpdate = people.find((person, ind) => {
-    if (person.id === +id) {
-      personInd = ind;
-      return true;
-    }
-  });
-  if (!personToUpdate) {
-    return res.status(401).send("Error: person not found");
-  }
-
-  const newPerson = { id, name };
-  const updatedPeople = [...people];
-  updatedPeople.splice(personInd, 1, newPerson);
-  console.log({ updatedPeople });
-  return res.status(200).json(updatedPeople);
-});
-
-app.delete("/api/people/:id", (request, res) => {
-  const id = request?.params?.id;
-  const updatedPeople = people.filter((person) => person.id !== +id);
-  res.status(200).json(updatedPeople);
-});
+// repeat the same for login, but this time I will hardcode the base path
+const { router: loginRouter } = require("./routes/login.routes");
+app.use("/login", loginRouter);
