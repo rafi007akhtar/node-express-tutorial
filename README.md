@@ -19,6 +19,12 @@ This is where I learn the basics of NodeJS and ExpressJS from [this freeCodeCamp
 ### Topics covered under ExpressJS
 
 - Serving a complete front-end app [without ExpressJS](./tutorial-on-basics/express-tutorial/01-serving-navbar-app-without-express.js), thereby highlighting its need.
+- Setting up [basic routes](./tutorial-on-basics/express-tutorial/02-express-basics.js) with ExpressJS.
+- Serving the same front-end app in the first point with Express JS using a [static middleware](./tutorial-on-basics/express-tutorial/03-serving-navbar-app-with-express.js) to show how Express can solve these problems.
+- [Sending JSON data, working with params and query params](./tutorial-on-basics/express-tutorial/04-json-params-query.js).
+- [Middleware basics](./tutorial-on-basics/express-tutorial/05-middleware-basics.js).
+- [Middleware in details](./tutorial-on-basics/express-tutorial/06-middleware-futher.js), with all the middleware residing in its own [file](./tutorial-on-basics/express-tutorial/middleware.js).
+- Using [other http methods](./tutorial-on-basics/express-tutorial/07-http-methods.js) by putting each handler function in its own [controller](./tutorial-on-basics/express-tutorial/controllers/people.controllers.js) and importing them in the [Express router](./tutorial-on-basics/express-tutorial/routes/).
 
 ### Dev Dependencies
 
