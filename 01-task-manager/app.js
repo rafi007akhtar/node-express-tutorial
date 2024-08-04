@@ -5,6 +5,7 @@ const express = require("express");
 const app = express();
 const router = require("./routes/tasks.routes");
 const notFound = require("./middleware/not-found");
+const { errorHandler } = require("./middleware/async");
 
 require("dotenv").config();
 const port = process.env?.port || 3000;
@@ -16,6 +17,7 @@ app.use(express.static("./public"));
 app.use(express.json());
 app.use(TASK_PATH, router);
 app.use(notFound);
+app.use(errorHandler);
 
 async function start() {
   console.log("Trying to connect to DB...");
