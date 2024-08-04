@@ -47,7 +47,12 @@ This is where I learn the basics of NodeJS and ExpressJS from [this freeCodeCamp
   nodemon app.js # or: nodemon app
   ```
 - To hit server with URL (GET request) using `curl`:
+
   ```sh
   # Syntax: curl urlendpoint
   curl localhost:3000/users # example
   ```
+
+  ### Notes
+
+  - REST in REST API stands for **Representional State Transfer**.
