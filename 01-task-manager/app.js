@@ -8,7 +8,7 @@ const notFound = require("./middleware/not-found");
 const { errorHandler } = require("./middleware/async");
 
 require("dotenv").config();
-const port = process.env?.port || 3000;
+const port = process.env?.PORT || 3000;
 
 const BASE_PATH = `/api/v1`;
 const TASK_PATH = `${BASE_PATH}/tasks`;
