@@ -56,3 +56,9 @@ This is where I learn the basics of NodeJS and ExpressJS from [this freeCodeCamp
   ### Notes
 
   - REST in REST API stands for **Representional State Transfer**.
+  - To run the file on a particular port, like 6000, the command is:
+    ```sh
+    # Syntax: PORT=<port-number> node <file-name>
+    # Example:
+    PORT=6000 node app
+    ```
