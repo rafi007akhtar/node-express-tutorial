@@ -11,12 +11,8 @@ const port = process.env?.port || 3000;
 const BASE_PATH = `/api/v1`;
 const TASK_PATH = `${BASE_PATH}/tasks`;
 
+app.use(express.static("./public"));
 app.use(express.json());
-
-app.get("/hello", (request, res) => {
-  res.send("Task manager app");
-});
-
 app.use(TASK_PATH, router);
 
 async function start() {
