@@ -1,7 +1,13 @@
 const Task = require("../models/tasks.model");
 
-function getAllTasks(request, res) {
-  res.send("placeholder for all tasks.");
+async function getAllTasks(request, res) {
+  try {
+    const allTasks = await Task.find({});
+    res.status(200).json(allTasks);
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({ msg: e });
+  }
 }
 
 async function createTask(request, res) {
@@ -10,20 +16,51 @@ async function createTask(request, res) {
     res.status(201).json(task);
   } catch (e) {
     console.log(e);
-    res.status(400).send(e.toString());
+    res.status(500).json({ msg: e });
   }
 }
 
-function getTask(request, res) {
-  res.json({ id: request.params.id });
+async function getTask(request, res) {
+  try {
+    const { id } = request.params;
+    const task = await Task.findById(id);
+    if (!task) {
+      return res.status(404).json({ msg: `No task with id ${id}` });
+    }
+    res.status(200).json(task);
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({ msg: e });
+  }
 }
 
-function updateTask(request, res) {
-  res.send("update task");
+async function updateTask(request, res) {
+  try {
+    const { id } = request.params;
+    const { body } = request;
+    const task = await Task.findByIdAndUpdate(id, body, { new: true });
+    if (!task) {
+      return res.status(404).json({ msg: `No task with id ${id}` });
+    }
+    res.status(200).json(task);
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({ msg: e });
+  }
 }
 
-function deleteTask(request, res) {
-  res.send("delete task.");
+async function deleteTask(request, res) {
+  try {
+    const { id } = request.params;
+    const task = await Task.findByIdAndDelete(id);
+    if (!task) {
+      return res.status(404).json({ msg: `No task with id ${id}` });
+    }
+    res.status(200).json(task);
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({ msg: e });
+  }
 }
 
 module.exports = { getAllTasks, createTask, getTask, updateTask, deleteTask };
