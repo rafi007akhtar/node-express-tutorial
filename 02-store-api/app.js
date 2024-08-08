@@ -1,6 +1,7 @@
 console.clear();
 
 require("dotenv").config();
+require("express-async-errors");
 
 const express = require("express");
 const app = express();
@@ -27,7 +28,7 @@ app.use(productsRoute, router);
 async function start() {
   try {
     console.log("Trying to connect to DB...");
-    const connection = connectDB(process.env.MONGO_URI);
+    const connection = connectDB(process.env.STORE_URI);
     if (connection) {
       console.log("Connected to MongoDB");
       app.listen(port, () => console.log(`App running on port ${port}`));
