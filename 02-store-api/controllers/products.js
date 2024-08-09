@@ -1,6 +1,7 @@
 const Product = require("../models/product");
 
 async function getAllProducts(request, res) {
+  // make sure only the valid keys that are a part of the schema are passed on in the query
   const schemaKeys = Product.schema.obj;
   const requestedKeys = request.query;
   const searchKeys = {};
@@ -12,7 +13,15 @@ async function getAllProducts(request, res) {
   if ("name" in searchKeys) {
     searchKeys.name = { $regex: searchKeys.name, $options: "i" };
   }
-  const products = await Product.find(searchKeys);
+
+  // apply the sort; if no sort is passed, sort by the created date
+  let { sort } = requestedKeys;
+  sort = sort || "createdAt";
+  if (sort.indexOf(",") !== -1) {
+    sort = sort.replaceAll(",", " ");
+  }
+
+  const products = await Product.find(searchKeys).sort(sort);
   res.status(200).json({ products, nbHits: products.length });
 }
 
