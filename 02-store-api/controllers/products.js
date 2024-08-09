@@ -26,10 +26,27 @@ async function getAllProducts(request, res) {
 }
 
 async function getAllProductsStatic(request, res) {
-  const featuedProducts = await Product.find({
+  let results = Product.find({
     featured: true,
   });
-  res.status(200).json({ featuedProducts, nbHits: featuedProducts.length });
+
+  let { fields, page, limit, sort } = request.query;
+  sort = sort || "createdAt";
+  page = +page || 1;
+  limit = +limit || 10;
+  const skip = (page - 1) * limit;
+
+  results = results.sort(sort);
+
+  if (fields) {
+    fields = fields.replaceAll(",", " ");
+    results = results.select(fields); // for selecting only the given keys
+  }
+  results = results.skip(skip).limit(limit);
+
+  const featuredProducts = await results;
+
+  res.status(200).json({ featuredProducts, nbHits: featuredProducts.length });
 }
 
 module.exports = { getAllProducts, getAllProductsStatic };
