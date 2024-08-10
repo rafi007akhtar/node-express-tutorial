@@ -1,10 +1,10 @@
-const CustomAPIError = require("../errors/custom-error");
 const jwt = require("jsonwebtoken");
+const { BadRequestError } = require("../errors/index");
 
 async function login(request, res) {
   const { username, password } = request.body;
   if (!username?.length || !password?.length) {
-    throw new CustomAPIError("Username and / or password not provided", 400);
+    throw new BadRequestError("Username and / or password not provided");
   }
 
   const id = new Date().toISOString(); // this should be unique for each user

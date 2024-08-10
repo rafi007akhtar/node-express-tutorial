@@ -1,10 +1,11 @@
-const CustomAPIError = require("../errors/custom-error");
 const jwt = require("jsonwebtoken");
+const { UnauthenticatedError } = require("../errors/index");
+const { StatusCodes } = require("http-status-codes");
 
 async function authenticationMiddleware(request, res, next) {
   const authHeader = request.headers.authorization || "";
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    throw new CustomAPIError("Token invalid or empty", 401);
+    throw new UnauthenticatedError("Token invalid or empty");
   }
 
   const token = authHeader.split(" ")[1];
@@ -12,7 +13,7 @@ async function authenticationMiddleware(request, res, next) {
   try {
     decodedInfo = jwt.verify(token, process.env.JWT_SECRET);
   } catch (e) {
-    return res.status(401).json({
+    return res.status(StatusCodes.UNAUTHORIZED).json({
       msg: "Unable to verify token",
       err: e,
     });
