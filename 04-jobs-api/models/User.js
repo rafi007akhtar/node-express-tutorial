@@ -17,11 +17,9 @@ const UserSchema = new mongoose.Schema({
     unique: true,
   },
   password: {
-    // TODO: to be hashed later
     type: String,
     required: [true, "not provided"],
     minlength: 6,
-    maxlength: 12,
   },
 });
 
