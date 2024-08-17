@@ -19,7 +19,23 @@ async function register(request, res) {
 }
 
 async function login(request, res) {
-  res.send("TODO");
+  const { email, password } = request.body;
+  if (!email || !password) {
+    throw new BadRequestError("Please enter email and password");
+  }
+
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw new BadRequestError("User with email does not exist");
+  }
+
+  const token = user.createJWT();
+  const isPasswordCorrect = await user.verifyPassword(password);
+  if (!isPasswordCorrect) {
+    throw new BadRequestError("Invalid credentials");
+  }
+
+  res.status(StatusCodes.OK).json({ user: { name: user.name }, token });
 }
 
 module.exports = { register, login };
