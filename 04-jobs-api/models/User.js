@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const SALT_ROUNDS = 10; // higher the rounds, more secure the password, but requires more processing power
 
@@ -33,6 +34,14 @@ UserSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(this.password, salt);
   next();
 });
+
+UserSchema.methods.createJWT = function () {
+  return jwt.sign(
+    { userId: this._id, name: this.name },
+    process.env.JWT_SECRET,
+    { expiresIn: "30d" }
+  );
+};
 
 const User = mongoose.model("User", UserSchema);
 
