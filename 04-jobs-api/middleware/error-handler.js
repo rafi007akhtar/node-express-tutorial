@@ -18,6 +18,8 @@ const errorHandlerMiddleware = (err, req, res, next) => {
   }
   // return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ err });
   return res.status(customError.statusCode).json({ msg: customError.msg });
+
+  // NOTE: will skip the remaining error handling
 };
 
 module.exports = errorHandlerMiddleware;
