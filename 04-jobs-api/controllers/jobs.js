@@ -9,7 +9,10 @@ async function createJob(request, res) {
 }
 
 async function getAllJobs(request, res) {
-  res.send("TODO");
+  const jobs = await Job.find({ createdBy: request.user.userId }).sort(
+    "createdAt"
+  );
+  res.status(StatusCodes.OK).json({ jobs, count: jobs.length });
 }
 
 async function getJob(request, res) {
