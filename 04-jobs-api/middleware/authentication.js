@@ -12,7 +12,7 @@ async function authGuard(request, res, next) {
     const token = authHeader.split(" ")[1];
     const payload = jwt.verify(token, process.env.JWT_SECRET);
     const { userId, name } = payload;
-    request.body = { userId, name };
+    request.user = { userId, name };
     next();
   } catch (e) {
     throw new UnauthenticatedError("Authentication failed:", e);
