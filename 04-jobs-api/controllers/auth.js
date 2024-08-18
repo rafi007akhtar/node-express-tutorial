@@ -8,14 +8,9 @@ async function register(request, res) {
     throw new BadRequestError("Please enter name and email and password");
   }
 
-  try {
-    const user = await User.create({ ...request.body });
-    const token = user.createJWT();
-    res.status(StatusCodes.CREATED).json({ user: { name: user.name }, token });
-  } catch (e) {
-    console.log({ e });
-    res.status(500).send({ e });
-  }
+  const user = await User.create({ ...request.body });
+  const token = user.createJWT();
+  res.status(StatusCodes.CREATED).json({ user: { name: user.name }, token });
 }
 
 async function login(request, res) {
