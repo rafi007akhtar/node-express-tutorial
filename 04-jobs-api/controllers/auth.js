@@ -38,4 +38,14 @@ async function login(request, res) {
   res.status(StatusCodes.OK).json({ user: { name: user.name }, token });
 }
 
-module.exports = { register, login };
+async function deleteAllUsers(request, res) {
+  try {
+    await User.deleteMany({});
+    res.status(StatusCodes.OK).send("All users deleted");
+  } catch (e) {
+    console.error(e);
+    res.json({ error: e.toString() });
+  }
+}
+
+module.exports = { register, login, deleteAllUsers };
