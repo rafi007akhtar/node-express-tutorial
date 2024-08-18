@@ -16,11 +16,36 @@ async function getAllJobs(request, res) {
 }
 
 async function getJob(request, res) {
-  res.send("TODO");
+  const { id } = request.params;
+  const { userId } = request.user;
+  const job = await Job.findOne({ _id: id, createdBy: userId });
+  if (!job) {
+    throw new NotFoundError("Job not found");
+  }
+  res.status(StatusCodes.OK).json({ job });
 }
 
 async function updateJob(request, res) {
-  res.send("TODO");
+  const { id } = request.params;
+  const { userId } = request.user;
+  const { company, position } = request.body;
+  if (!company && !position) {
+    throw new BadRequestError("Please provide either company or position");
+  }
+
+  const job = await Job.findOneAndUpdate(
+    { _id: id, createdBy: userId },
+    request.body,
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+  if (!job) {
+    throw new NotFoundError("Job not found");
+  }
+
+  res.status(StatusCodes.OK).json({ job });
 }
 
 async function deleteJob(request, res) {
