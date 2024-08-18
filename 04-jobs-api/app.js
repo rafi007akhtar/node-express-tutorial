@@ -5,6 +5,7 @@ require("express-async-errors");
 const connectDB = require("./db/connect");
 const authRouter = require("./routes/auth");
 const jobsRouter = require("./routes/jobs");
+const authGuard = require("./middleware/authentication");
 const express = require("express");
 const app = express();
 
@@ -17,7 +18,8 @@ app.use(express.json());
 
 // routes
 app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/jobs", jobsRouter);
+app.use(authGuard); // auth guard will be applied to all routes below this one (so the job routes)
+app.use("/api/v1/jobs", jobsRouter); // alternatively: add the auth guard middleware as the second param here
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
